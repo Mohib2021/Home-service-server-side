@@ -15,9 +15,30 @@ const run = async () => {
 		await client.connect();
 		const database = client.db("Home-Service");
 		const serviceCollection = database.collection("Services");
+		const userCollections = database.collection("Users");
+		const reviewCollections = database.collection("Reviews");
+		const orderCollections = database.collection("Orders");
 
 		//Get Service Collections
 		app.get("/services", async (req, res) => {
+			const cursor = serviceCollection.find({});
+			const result = await cursor.toArray();
+			res.send(result);
+		});
+		//Get User Collections
+		app.get("/users", async (req, res) => {
+			const cursor = serviceCollection.find({});
+			const result = await cursor.toArray();
+			res.send(result);
+		});
+		//Get Review Collections
+		app.get("/reviews", async (req, res) => {
+			const cursor = serviceCollection.find({});
+			const result = await cursor.toArray();
+			res.send(result);
+		});
+		//Get Order Collections
+		app.get("/order", async (req, res) => {
 			const cursor = serviceCollection.find({});
 			const result = await cursor.toArray();
 			res.send(result);
