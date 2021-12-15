@@ -27,19 +27,19 @@ const run = async () => {
 		});
 		//Get User Collections
 		app.get("/users", async (req, res) => {
-			const cursor = serviceCollection.find({});
+			const cursor = userCollections.find({});
 			const result = await cursor.toArray();
 			res.send(result);
 		});
 		//Get Review Collections
 		app.get("/reviews", async (req, res) => {
-			const cursor = serviceCollection.find({});
+			const cursor = reviewCollections.find({});
 			const result = await cursor.toArray();
 			res.send(result);
 		});
 		//Get Order Collections
-		app.get("/order", async (req, res) => {
-			const cursor = serviceCollection.find({});
+		app.get("/orders", async (req, res) => {
+			const cursor = orderCollections.find({});
 			const result = await cursor.toArray();
 			res.send(result);
 		});
