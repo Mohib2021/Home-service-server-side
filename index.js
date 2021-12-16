@@ -47,6 +47,14 @@ const run = async () => {
 			const result = await cursor.toArray();
 			res.send(result);
 		});
+
+		//Post user in collection
+		app.post("/users", async (req, res) => {
+			const user = req.body;
+			const result = await userCollections.insertOne(user);
+			res.send(result);
+		});
+
 		//Get Review Collections
 		app.get("/reviews", async (req, res) => {
 			const cursor = reviewCollections.find({});
