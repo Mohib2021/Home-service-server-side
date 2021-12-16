@@ -70,6 +70,13 @@ const run = async () => {
 			const result = await cursor.toArray();
 			res.send(result);
 		});
+
+		// Post Order to collection
+		app.post("/orders", async (req, res) => {
+			const order = req.body;
+			const result = await orderCollections.insertOne(order);
+			res.send(result);
+		});
 	} finally {
 		//
 	}
