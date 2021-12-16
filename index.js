@@ -51,8 +51,11 @@ const run = async () => {
 		//Post user in collection
 		app.post("/users", async (req, res) => {
 			const user = req.body;
-			const result = await userCollections.insertOne(user);
-			res.send(result);
+			const query = await userCollections.findOne({ email: user.email });
+			if (!query) {
+				const result = await userCollections.insertOne(user);
+				res.send(result);
+			}
 		});
 
 		//Get Review Collections
