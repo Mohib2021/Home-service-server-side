@@ -35,6 +35,23 @@ const run = async () => {
 			res.send(result);
 		});
 
+		// Post Service
+		app.post("/services", async (req, res) => {
+			const service = req.body;
+			const file = req.files;
+			const photoData = file.photo.data;
+			const encodedPhoto = photoData.toString("base64");
+			const photoBuffer = Buffer.from(encodedPhoto, "base64");
+			const newService = {
+				name: service.name,
+				price: service.price,
+				description: service.description,
+				photo: photoBuffer,
+			};
+			const result = await serviceCollection.insertOne(newService);
+			res.send(result);
+		});
+
 		//Get single service
 		app.get("/services/:id", async (req, res) => {
 			const id = req.params.id;
