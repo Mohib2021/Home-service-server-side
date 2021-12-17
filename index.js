@@ -1,6 +1,7 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
 const ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const app = express();
@@ -9,6 +10,7 @@ const port = process.env.PORT || 5000;
 //middleware
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 
 const uri =
 	"mongodb+srv://Mohib:Mohib@cluster0.nr9ns.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -51,9 +53,27 @@ const run = async () => {
 		//Post user in collection
 		app.post("/users", async (req, res) => {
 			const user = req.body;
-			const query = await userCollections.findOne({ email: user.email });
-			if (!query) {
-				const result = await userCollections.insertOne(user);
+			const file = req.files;
+			if (!file) {
+				const query = await userCollections.findOne({ email: user.email });
+				if (!query) {
+					const result = await userCollections.insertOne(user);
+					res.send(result);
+				}
+			} else {
+				const displayName = user.displayName;
+				const email = user.email;
+				const role = user.role;
+				const photoData = file.photo.data;
+				const encodedPhoto = photoData.toString("base64");
+				const photoBuffer = Buffer.from(encodedPhoto, "base64");
+				const signUpUser = {
+					displayName,
+					email,
+					role,
+					photo: photoBuffer,
+				};
+				const result = await userCollections.insertOne(signUpUser);
 				res.send(result);
 			}
 		});
