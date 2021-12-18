@@ -84,9 +84,10 @@ const run = async () => {
 			const option = { upsert: true };
 			const updateDoc = {
 				$set: {
-					status: body.role,
+					role: body.role,
 				},
 			};
+			console.log(body);
 			const result = await userCollections.updateOne(query, updateDoc, option);
 			res.send(result);
 		});
