@@ -67,6 +67,13 @@ const run = async () => {
 			res.send(result);
 		});
 
+		// Get single User
+		app.get("/users/:email", async (req, res) => {
+			const email = req.params.email;
+			const result = await userCollections.findOne({ email: email });
+			res.send(result);
+		});
+
 		//Post user in collection
 		app.post("/users", async (req, res) => {
 			const user = req.body;
@@ -101,6 +108,14 @@ const run = async () => {
 			const result = await cursor.toArray();
 			res.send(result);
 		});
+
+		// Post review in collection
+		app.post("/reviews", async (req, res) => {
+			const review = req.body;
+			const result = await reviewCollections.insertOne(review);
+			res.send(result);
+		});
+
 		//Get Order Collections
 		app.get("/orders", async (req, res) => {
 			const cursor = orderCollections.find({});
