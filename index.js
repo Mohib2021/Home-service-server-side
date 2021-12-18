@@ -60,10 +60,34 @@ const run = async () => {
 			res.send(result);
 		});
 
+		// Delete single service
+		app.delete("/services/:id", async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectId(id) };
+			const result = await serviceCollection.deleteOne(query);
+			res.send(result);
+			console.log(result);
+		});
+
 		//Get User Collections
 		app.get("/users", async (req, res) => {
 			const cursor = userCollections.find({});
 			const result = await cursor.toArray();
+			res.send(result);
+		});
+
+		// Update user role
+		app.put("/users/:id", async (req, res) => {
+			const id = req.params.id;
+			const body = req.body;
+			const query = { _id: ObjectId(id) };
+			const option = { upsert: true };
+			const updateDoc = {
+				$set: {
+					status: body.role,
+				},
+			};
+			const result = await userCollections.updateOne(query, updateDoc, option);
 			res.send(result);
 		});
 
@@ -127,6 +151,29 @@ const run = async () => {
 		app.post("/orders", async (req, res) => {
 			const order = req.body;
 			const result = await orderCollections.insertOne(order);
+			res.send(result);
+		});
+
+		// Update order status to Shipping
+		app.put("/orders/:id", async (req, res) => {
+			const id = req.params.id;
+			const body = req.body;
+			const query = { _id: ObjectId(id) };
+			const option = { upsert: true };
+			const updateDoc = {
+				$set: {
+					status: body.status,
+				},
+			};
+			const result = await orderCollections.updateOne(query, updateDoc, option);
+			res.send(result);
+		});
+
+		// Delete single Order
+		app.delete("/orders/:id", async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectId(id) };
+			const result = await orderCollections.deleteOne(query);
 			res.send(result);
 		});
 	} finally {
