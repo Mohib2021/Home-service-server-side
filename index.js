@@ -149,6 +149,14 @@ const run = async () => {
 			res.send(result);
 		});
 
+		//Get single order
+		app.get("/orders/:id", async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectIdj(id) };
+			const result = await orderCollections.findOne(query);
+			res.send(result);
+		});
+
 		// Post Order to collection
 		app.post("/orders", async (req, res) => {
 			const order = req.body;
