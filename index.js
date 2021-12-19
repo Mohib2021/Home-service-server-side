@@ -190,7 +190,7 @@ const run = async () => {
 			const option = { upsert: true };
 			const updateDoc = {
 				$set: {
-					payment: body.payment,
+					payment: body,
 				},
 			};
 			const result = await orderCollections.updateOne(query, updateDoc, option);
