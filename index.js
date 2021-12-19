@@ -182,6 +182,20 @@ const run = async () => {
 			const result = await orderCollections.updateOne(query, updateDoc, option);
 			res.send(result);
 		});
+		// Update order payment
+		app.put("/orderPayment/:id", async (req, res) => {
+			const id = req.params.id;
+			const body = req.body;
+			const query = { _id: ObjectId(id) };
+			const option = { upsert: true };
+			const updateDoc = {
+				$set: {
+					payment: body.payment,
+				},
+			};
+			const result = await orderCollections.updateOne(query, updateDoc, option);
+			res.send(result);
+		});
 
 		// Delete single Order
 		app.delete("/orders/:id", async (req, res) => {
