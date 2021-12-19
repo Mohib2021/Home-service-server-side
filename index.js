@@ -231,12 +231,3 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
 	console.log("Home service is running", port);
 });
-
-// const paymentInfo = req.body;
-// const amount = paymentInfo.price * 100;
-// const paymentIntent = await stripe.paymentIntents.create({
-// 	currency: 'usd',
-// 	amount: amount,
-// 	payment_method_types: ['card']
-// });
-// res.json({ clientSecret: paymentIntent.client_secret })
