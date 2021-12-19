@@ -3,6 +3,10 @@ const { MongoClient } = require("mongodb");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const ObjectId = require("mongodb").ObjectId;
+const stripe = require("stripe")(
+	"sk_test_51K8Mj3KGdK20KSsSjIYYpMAhI1PZ7hev2kSq8an6kZaQQwQ4cbDRKcgqeQigSvA2SVujmUJK1SJ9oBM8EFEzYcni00FVk5EWCl"
+);
+
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -185,6 +189,20 @@ const run = async () => {
 			const query = { _id: ObjectId(id) };
 			const result = await orderCollections.deleteOne(query);
 			res.send(result);
+		});
+
+		// Payment intent
+		app.post("/create-payment-intent", async (req, res) => {
+			const paymentInfo = req.body;
+			const amount = paymentInfo.price * 100;
+			const paymentIntent = stripe.paymentIntents.create({
+				currency: "usd",
+				amount: amount,
+				payment_methods_types: ["card"],
+			});
+			res.send({
+				clientSecret: paymentIntent.client_secret,
+			});
 		});
 	} finally {
 		//
