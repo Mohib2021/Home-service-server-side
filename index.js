@@ -152,7 +152,7 @@ const run = async () => {
 		//Get single order
 		app.get("/orders/:id", async (req, res) => {
 			const id = req.params.id;
-			const query = { _id: ObjectIdj(id) };
+			const query = { _id: ObjectId(id) };
 			const result = await orderCollections.findOne(query);
 			res.send(result);
 		});
