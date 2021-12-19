@@ -195,12 +195,13 @@ const run = async () => {
 		app.post("/create-payment-intent", async (req, res) => {
 			const paymentInfo = req.body;
 			const amount = paymentInfo.price * 100;
-			const paymentIntent = stripe.paymentIntents.create({
+			const paymentIntent = await stripe.paymentIntents.create({
 				currency: "usd",
 				amount: amount,
-				payment_methods_types: ["card"],
+				payment_method_types: ["card"],
 			});
-			res.send({
+			console.log("create payment is called");
+			res.json({
 				clientSecret: paymentIntent.client_secret,
 			});
 		});
@@ -216,3 +217,12 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
 	console.log("Home service is running", port);
 });
+
+// const paymentInfo = req.body;
+// const amount = paymentInfo.price * 100;
+// const paymentIntent = await stripe.paymentIntents.create({
+// 	currency: 'usd',
+// 	amount: amount,
+// 	payment_method_types: ['card']
+// });
+// res.json({ clientSecret: paymentIntent.client_secret })
