@@ -13,3 +13,4 @@ This is a MERN stack based website. In this website I used Firebase Authenticati
 - Stripe payment gateway.
 - Firebase Authentication.
 - HTML, CSS, ReactBootstrap, Material UI used.
+- Admin : abdulla13@gmail.com password : abdulla
